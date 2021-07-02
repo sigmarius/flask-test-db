@@ -1,0 +1,153 @@
+{% extends 'full-window.html' %}
+{% block title %}
+<title>Регистрация в личном кабинете OKB</title>
+{% endblock %}
+{% block form %}
+<form method="post" class="form-signin form-signin--register">
+<a href="/">
+<img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
+</a>
+<h1 class="h3 mb-4 font-weight-normal">Зарегистрируйтесь пожалуйста</h1>
+<div class="form-row">
+  <div class="col-md-4">
+    <label for="fname" class="sr-only">Фамилия</label>
+    <input type="text" id="fname" name="fname" class="form-control mb-3" placeholder="Фамилия" required autofocus>
+  </div>
+  <div class="col-md-4">
+    <label for="nname" class="sr-only">Имя</label>
+    <input type="text" id="nname" name="nname" class="form-control mb-3" placeholder="Имя" required>
+  </div>
+  <div class="col-md-4">
+    <label for="oname" class="sr-only">Отчество</label>
+    <input type="text" id="oname" name="oname" class="form-control mb-3" placeholder="Отчество">
+  </div>
+ </div>
+
+<div class="form-row form-group mb-4">
+	<div class="col-sm-4">
+		<label for="date_hb" class="visually-hidden">Дата рождения</label>
+		<input class="form-control" type="date" id="date_hb" name="date_hb" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+		<small class="form-text text-muted">Дата рождения</small>
+	</div>
+
+	<div class="col-sm-4 text-left align-items-center">
+		<div class="alert alert-light mb-0 p-2">
+			<div class="custom-control custom-radio custom-control-inline">
+			  <input type="radio" id="sex-1" name="sex" class="custom-control-input" checked value="1">
+			  <label class="custom-control-label" for="sex-1">Мужской</label>
+			</div>
+			<div class="custom-control custom-radio custom-control-inline">
+			  <input type="radio" id="sex-2" name="sex" class="custom-control-input" value="2">
+			  <label class="custom-control-label" for="sex-2">Женский</label>
+			</div>
+		</div>
+		<small class="form-text text-muted">Пол</small>
+	</div>
+
+	<div class="col-sm-4">
+		<label for="data_reg" class="visually-hidden">Дата регистрации</label>
+		<input class="form-control" type="date" id="data_reg" name="data_reg" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+		<small class="form-text text-muted">Дата регистрации</small>
+	</div>
+</div>
+
+<div class="alert alert-light mb-3 py-2 px-3 alert--docs">
+	<legend class="alert-heading h6 text-left mb-3">Документы</legend>
+	<div class="form-row">
+			<div class="col-md-5">
+				<label for="snills" class="sr-only">СНИЛС</label>
+        <input type="text" id="snills" name="snills" class="form-control mb-3" placeholder="СНИЛС" required>
+      </div>
+		  <div class="col-md-7">
+				<label for="polis" class="sr-only">Полис</label>
+        <input type="text" id="polis" name="polis" class="form-control mb-3" placeholder="Полис" required>
+      </div>
+	</div>
+	<div class="form-row mb-3">
+		<div class="col-md-6 input-group mb-3">
+			<div class="input-group-prepend">
+				  <label class="input-group-text" for="tdoc">Тип документа</label>
+		</div>
+			<select class="form-control custom-select" id="tdoc" name="tdoc">
+	      <option value="1">Паспорт</option>
+	      <option value="2">Водительское удостоверение</option>
+	      <option value="3">Заграничный паспорт</option>
+    </select>
+		</div>
+		<div class="col-md-2">
+			<label for="sdoc" class="sr-only">Серия</label>
+      <input type="text" id="sdoc" name="sdoc" class="form-control mb-0" placeholder="Серия" required>
+			<small class="form-text text-muted">Серия документа</small>
+		</div>
+		<div class="col-md-4">
+			<label for="ndoc" class="sr-only">Номер документа</label>
+      <input type="text" id="ndoc" name="ndoc" class="form-control mb-0" placeholder="Номер" required>
+			<small class="form-text text-muted">Номер документа</small>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md-4">
+			<label for="data_doc" class="visually-hidden">Дата выдачи документа</label>
+		<input class="form-control" type="date" id="data_doc" name="data_doc" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+		<small class="form-text text-muted">Дата выдачи документа</small>
+		</div>
+		<div class="col-md-8">
+			<label for="avtor_doc" class="sr-only">Кем выдан документ</label>
+      <input type="text" id="avtor_doc" name="avtor_doc" class="form-control" placeholder="Кем выдан документ">
+			<small class="form-text text-muted">Наименование и код подразделения</small>
+		</div>
+	</div>
+</div>
+
+<div class="alert alert-light mb-3 py-2 px-3 alert--docs">
+	<legend class="alert-heading h6 text-left mb-3">Контактные данные</legend>
+	<div class="form-row">
+		<div class="col-md-6">
+			<label for="phone" class="sr-only">Телефон</label>
+      <input type="text" id="phone" name="phone" class="form-control mb-3" placeholder="Телефон" required>
+		</div>
+		<div class="col-md-6">
+		  <label for="email" class="sr-only">Email address</label>
+		  <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Email address" required>
+    </div>
+	</div>
+	<div class="form-row">
+		<div class="col-md-12">
+			<label for="p_adress" class="sr-only">Почтовый адрес</label>
+      <input type="text" id="p_adress" name="p_adress" class="form-control" placeholder="Почтовый адрес" required>
+			<small class="form-text text-muted">Почтовый адрес полностью, включая индекс</small>
+		</div>
+	</div>
+</div>
+
+<div class="alert alert-light mb-3 py-2 px-3 alert--docs">
+	<div class="form-row">
+	<legend class="alert-heading h6 text-left mb-3">Данные для входа в личный кабинет</legend>
+		<div class="col-md-6">
+			<label for="p_adress" class="sr-only">Логин</label>
+	      <input type="text" id="p_adress" name="p_adress" class="form-control" placeholder="Логин" required readonly>
+				<small class="form-text text-muted">Используйте e-mail для входа в личный кабинет</small>
+		</div>
+		<div class="col-md-6">
+			<label for="pass_u" class="sr-only">Password</label>
+			<input type="password" id="pass_u" name="pass_u" class="form-control" placeholder="Пароль" required>
+			<small class="form-text text-muted">Придумайте пароль - не менее 8 символов, английские буквы и цифры</small>
+		</div>
+	</div>
+	<div class="form-row mt-3">
+		<div class="col-md-12">
+			<div class="form-check">
+			  <input type="checkbox" class="form-check-input" id="ed_pass" value="ed_pass" required checked>
+			  <label class="form-check-label" for="ed_pass">Я даю согласие на смену пароля (в случае утери)</label>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Войти</button>
+<p class="small text-center text-gray-soft">Уже зарегистрированы? <a href="/login">Войти</a></p>
+<p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
+</form>
+{% endblock %}

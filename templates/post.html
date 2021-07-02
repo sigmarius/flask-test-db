@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Существующий пост в БД</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="mb-5 text-center">{{ title}}</h1>
+
+	{{ post | safe}}
+
+</div>
+{% endblock %}

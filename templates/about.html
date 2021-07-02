@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Задать вопрос</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="mb-3 text-center">Задать вопрос</h1>
+
+  {% for cat, msg in get_flashed_messages(True) %}
+  <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
+  {% endfor %}
+
+  <div class="row align-items-center">
+    <div class="col">
+      <form method="post" class="form-signin form-signin--message">
+        <label for="about-user" class="sr-only">Представьтесь пожалуйста</label>
+        <input type="text" id="about-user" name="about-user" class="form-control mb-3" placeholder="Ваше имя"
+          required=""
+          autofocus="">
+        <label for="about-user-email" class="sr-only">Email address</label>
+        <input type="email" id="about-user-email" name="about-user-email" class="form-control mb-3" placeholder="Email address"
+          required=""
+          autofocus="">
+        <label for="about-message" class="sr-only">Ваше сообщение</label>
+        <textarea id="about-message" name="about-message" class="form-control" placeholder="Ваше сообщение"></textarea>
+        <div class="checkbox mb-3 mt-3">
+          <label>
+          <input type="checkbox" value="remember-me"> Запомнить меня
+          </label>
+        </div>
+        <button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Задать вопрос</button>
+        <p class="small text-center text-gray-soft">Еще нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+        <p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
+      </form>
+    </div>
+    <div class="col">
+      <p class="lead">ГБУЗВО "ОКБ" осуществляет работу с обращениями граждан в соответствии с
+        Федеральным законом Российской Федерации от<b> 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений
+        граждан Российской Федерации»</b>
+      </p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tincidunt nunc non diam molestie auctor. Suspendisse maximus risus laoreet orci mattis ullamcorper. Nam faucibus ipsum felis, et facilisis ipsum volutpat a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris cursus sollicitudin eros, eget suscipit tortor tristique ac. Quisque tempor nisi vel accumsan finibus. Aliquam quis ornare turpis. Integer rutrum euismod tortor, at lobortis dolor vestibulum sed.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

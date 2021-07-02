@@ -1,0 +1,30 @@
+{% extends 'full-window.html' %}
+
+{% block title %}
+    <title>Авторизация в личном кабинете OKB</title>
+{% endblock %}
+
+{% block form %}
+    <form action="/login" method="post" class="form-signin">
+      <a href="/">
+        <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
+      </a>
+      <h1 class="h3 mb-4 font-weight-normal">Авторизуйтесь пожалуйста</h1>
+      <label for="login-username" class="sr-only">Email address</label>
+      <input type="text" id="login-username" name="login-username" class="form-control mb-3" placeholder="Username"
+             required=""
+             autofocus="">
+
+      <label for="login-password" class="sr-only">Password</label>
+      <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Пароль" required="">
+      <div class="checkbox mb-3">
+
+        <label>
+          <input type="checkbox" value="remember-me"> Запомнить меня
+        </label>
+      </div>
+      <button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Войти</button>
+      <p class="small text-center text-gray-soft">Еще нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+      <p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
+    </form>
+{% endblock %}

@@ -1,0 +1,107 @@
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.okb-header {
+    justify-content: space-between;
+}
+
+.okb-header nav a {
+    margin-right: 20px;
+}
+
+.okb-login {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-signin button {
+    background-color: maroon;
+}
+
+.form-signin--message {
+  max-width: none;
+}
+
+.form-signin--register {
+  max-width: 800px;
+}
+
+.form-signin--register small {
+  text-align: left;
+}
+
+.form-signin--register .alert {
+  border: 1px solid #ced4da;
+}
+
+.form-signin--register .alert--docs {
+  background-color: transparent;
+}
+
+.flash {
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+}
+.flash.success{
+  color: maroon;
+  background-color: #f5f5f5;
+}
+.flash.error {
+  color: black;
+  background-color: rgba(128, 0, 0, 0.5);
+  border: 1px solid maroon;
+}
+
+.not-found {
+  margin: 0 auto;
+}

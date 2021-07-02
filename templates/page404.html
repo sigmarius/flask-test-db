@@ -1,0 +1,15 @@
+{% extends 'full-window.html' %}
+
+{% block title %}
+    <title>Страница не найдена</title>
+{% endblock %}
+
+{% block form %}
+<div class="not-found">
+  <a href="/">
+  <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
+  </a>
+  <h1 class="h3 mb-4 font-weight-normal">Страница не найдена :(</h1>
+  <a class="btn btn-lg btn btn-danger btn-block mb-3" href="{{ url_for('index') }}">Вернуться на Главную страницу</a>
+</div>
+{% endblock %}

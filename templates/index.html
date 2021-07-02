@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Личный кабинет</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+          <p class="fs-5 text-muted text-center">В Консультативной поликлинике ГБУЗВО «ОКБ» осуществляются консультации врачами
+              по 35 узким специальностям. Прием ведут врачи первой и высшей квалификационной категории, в том числе 3
+              кандидата медицинских наук.</p>
+
+<p class="fs-5 text-muted text-center">В течении недели прием ведут 11 главных специалистов области по урологии, травматологии,
+    гинекологии, аллергологии, гематологии, гастроэнтерологии, эндокринологии, нейрохирургии, отоларингологии, офтальмологии, сосудистой хирургии, а так же зав. отделениями.</p>
+
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+        {% for el in data %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                  <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">{{ el.title }}</h4>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ el.price }} <small class="text-muted
+                    fw-light">рублей</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                      <li>количество талонов {{ el.id }}</li>
+                      <li>Email support</li>
+                      <li>Help center access</li>
+                    </ul>
+                    <a href="/buy/{{ el.id }}" class="w-100 btn btn-lg btn-outline-primary">Оплатить</a>
+                  </div>
+                </div>
+      </div>
+        {%  endfor%}
+        </div>
+    </div>
+{% endblock %}
+

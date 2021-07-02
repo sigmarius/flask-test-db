@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Добавление поста в БД</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="mb-5 text-center">Добавление поста в БД</h1>
+
+	{% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
+  {% endfor %}
+
+	<form action="{{ url_for('addPost') }}" method="post" class="form-signin">
+		<p>
+			<label for="name">Название статьи </label>
+			<input type="text" id="name" name="name" value="" required class="form-control">
+		</p>
+		<p>
+			<label for="url">URL статьи</label>
+			<input type="text" id="url" name="url" value="" required class="form-control">
+		</p>
+		<p><label for="post">Текст статьи:</label></p>
+		<p>
+			<textarea name="post" id="post" cols="40" rows="7" class="form-control"></textarea>
+		</p>
+		<button type="submit" class="btn btn-lg btn btn-danger btn-block mb-3">Добавить</button>
+	</form>
+
+</div>
+{% endblock %}
