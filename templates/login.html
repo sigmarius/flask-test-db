@@ -9,22 +9,26 @@
       <a href="/">
         <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
       </a>
+      {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
+		{% endfor %}
+
       <h1 class="h3 mb-4 font-weight-normal">Авторизуйтесь пожалуйста</h1>
-      <label for="login-username" class="sr-only">Email address</label>
-      <input type="text" id="login-username" name="login-username" class="form-control mb-3" placeholder="Username"
+      <label for="email" class="sr-only">Email address</label>
+      <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Ваш email"
              required=""
              autofocus="">
 
-      <label for="login-password" class="sr-only">Password</label>
-      <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Пароль" required="">
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required="">
       <div class="checkbox mb-3">
 
         <label>
-          <input type="checkbox" value="remember-me"> Запомнить меня
+          <input type="checkbox" name="rememberme" value="rememberme" checked> Запомнить меня
         </label>
       </div>
       <button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Войти</button>
-      <p class="small text-center text-gray-soft">Еще нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+      <p class="small text-center text-gray-soft">Еще нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
       <p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
     </form>
 {% endblock %}
