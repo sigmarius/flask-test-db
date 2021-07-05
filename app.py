@@ -9,6 +9,9 @@ from FDataBase import FDataBase
 # generate_password_hash() from Werkzeug.security => кодирует строку по протоколу PBKDF2
 # check_password_hash() from Werkzeug.security => проверяет данные на соответствие хеша
 from werkzeug.security import generate_password_hash, check_password_hash
+# для авторизации пользователей => pip install flask-login
+from flask_login import LoginManager, login_user, login_required
+from UserLogin import UserLogin
 
 # configuration
 DATABASE = '/tmp/okbsqlite.db'
@@ -17,8 +20,18 @@ SECRET_KEY = 'olM2rtRbg0kzDmdCheQawgDeT0'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'okbsqlite.db')))
+
+
+# авторизация
+login_manager = LoginManager(app)
+
+
+# формирует экземпляр класса при каждом запросе
+@login_manager.user_loader
+def load_user(user_id):
+    print('load_user')
+    return UserLogin().fromDB(user_id, dbase)
 
 
 def connect_db():
@@ -44,6 +57,7 @@ def get_db():
     return g.link_db
 
 
+# глобальная переменная для связи с БД
 dbase = None
 
 
@@ -63,6 +77,7 @@ def close_db(error):
 
 
 @app.route('/database')
+@login_required  # доступ только авторизованным пользователям
 def database():
     content = render_template('database.html', menu=dbase.getMenu(), posts=dbase.getPostsAnonce())
 
@@ -94,6 +109,7 @@ def addPost():
 
 
 @app.route("/post/<alias>")
+@login_required  # доступ только авторизованным пользователям
 def showPost(alias):
     title, post = dbase.getPost(alias)
     if not title:
@@ -104,11 +120,15 @@ def showPost(alias):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if 'userLogged' in session:
-        return redirect(url_for('profile', username=session['userLogged']))
-    elif request.method == 'POST' and request.form['login-username'] == "admin" and request.form['login-password'] == "Qq1234":
-        session['userLogged'] = request.form['login-username']
-        return redirect(url_for('profile', username=session['userLogged']))
+    if request.method == 'POST':
+        user = dbase.getUserByEmail(request.form['email'])
+        if user and check_password_hash(user['password'], request.form['password']):
+            userlogin = UserLogin().create(user)
+            # авторизуем пользователя
+            login_user(userlogin)
+            return redirect(url_for('database'))
+
+        flash('Неверная пара логин/пароль', category='error')
 
     return render_template('login.html')
 
