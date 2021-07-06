@@ -105,3 +105,9 @@
 .not-found {
   margin: 0 auto;
 }
+
+.profile__avatar img {
+  width: 64px;
+  height: 64px;
+  max-width: 100%;
+}

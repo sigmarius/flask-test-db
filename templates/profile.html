@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Профиль пользователя пациента OKB</title>
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col text-center">
+			<a href="/">
+        <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
+      </a>
+      {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
+		{% endfor %}
+		</div>
+	</div>
+
+      <h2 class="h3 mb-4 font-weight-normal text-center">Профиль пользователя пациента OKB</h2>
+      <div class="row profile">
+	      <div class="col">
+		      <div class="profile__avatar text-center mb-3">
+			      <img src="{{ url_for('avatar') }}" alt="Avatar">
+		      </div>
+		      <div class="profile__load">
+			      <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+				      <div class="form-row justify-content-center mb-3">
+						      <label for="file" class="sr-only">Загрузить аватар</label>
+					        <input type="file" id="file" name="file" class="mb-3">
+				      </div>
+						      <button type="submit" class="btn btn-lg btn btn-danger btn-block mb-3">Загрузить</button>
+			      </form>
+		      </div>
+	      </div>
+	      <div class="col alert alert-light">
+		      <p><a href="{{ url_for('logout') }}">Выйти из профиля</a></p>
+		      <ul class="profile__info">
+			      <li>Имя: {{ current_user.getName() }}</li>
+			      <li>Email: {{ current_user.getEmail() }}</li>
+		      </ul>
+	      </div>
+      </div>
+
+      <p class="mt-5 mb-3 text-muted text-center">© ГБУЗВО "Областная клиническая больница"</p>
+
+{% endblock %}
