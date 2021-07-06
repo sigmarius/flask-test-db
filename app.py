@@ -10,7 +10,7 @@ from FDataBase import FDataBase
 # check_password_hash() from Werkzeug.security => проверяет данные на соответствие хеша
 from werkzeug.security import generate_password_hash, check_password_hash
 # для авторизации пользователей => pip install flask-login
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
 
 # configuration
@@ -23,8 +23,12 @@ app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'okbsqlite.db')))
 
 
-# авторизация
+# авторизация и связь с приложением
 login_manager = LoginManager(app)
+# если неавторизованный пользователь посещает закрытую страницу => он перенаправляется на страницу авторизации
+login_manager.login_view = 'login'
+login_manager.login_message = "Авторизуйтесь для доступа к закрытым страницам"
+login_manager.login_message_category = "success"
 
 
 # формирует экземпляр класса при каждом запросе
@@ -120,13 +124,19 @@ def showPost(alias):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+
     if request.method == 'POST':
         user = dbase.getUserByEmail(request.form['email'])
         if user and check_password_hash(user['password'], request.form['password']):
             userlogin = UserLogin().create(user)
+            # запомнить меня в форме
+            rm = True if request.form.get('rememberme') else False
             # авторизуем пользователя
-            login_user(userlogin)
-            return redirect(url_for('database'))
+            login_user(userlogin, remember=rm)
+            # переход на страницу, с которой изначально осуществлялся запрос неавторизованного пользователя
+            return redirect(request.args.get("next") or url_for('profile'))
 
         flash('Неверная пара логин/пароль', category='error')
 
@@ -184,13 +194,23 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/profile/<int:username>')
-@app.route('/profile/<path:username>')
-def profile(username):
-    if 'userLogged' not in session or session['userLogged'] != username:
-        abort(401)
+@app.route('/profile')
+@login_required
+# current_user => функция из модуля Flask-Login
+def profile():
+    return f"""
+        <p><a href="{url_for('logout')}">Выйти из профиля</a></p>
+        <p>user info: {current_user.get_id()}</p>
+    """
 
-    return f"Привет, пользователь: {username}"
+
+@app.route('/logout')
+@login_required
+def logout():
+    # функция из модуля Flask-Login
+    logout_user()
+    flash("Вы вышли из аккаунта", "success")
+    return redirect(url_for('login'))
 
 
 @app.route('/buy/<int:id>')
