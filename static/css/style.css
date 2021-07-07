@@ -108,6 +108,15 @@
 
 .profile__avatar img {
   width: 64px;
-  height: 64px;
+  height: auto;
   max-width: 100%;
+}
+
+.invalid {
+  background-color: #e7c3c3;
+  border: 2px solid maroon;
+}
+
+.invalid-desc {
+  color: maroon;
 }

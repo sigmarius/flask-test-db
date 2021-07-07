@@ -12,6 +12,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # для авторизации пользователей => pip install flask-login
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
+# WTForms => Для работы с формами => pip install flask_wtf, pip install email_validator
+from forms import LoginForm, RegisterForm
 
 # configuration
 DATABASE = '/tmp/okbsqlite.db'
@@ -129,12 +131,13 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('profile'))
 
-    if request.method == 'POST':
-        user = dbase.getUserByEmail(request.form['email'])
-        if user and check_password_hash(user['password'], request.form['password']):
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = dbase.getUserByEmail(form.email.data)
+        if user and check_password_hash(user['password'], form.password.data):
             userlogin = UserLogin().create(user)
             # запомнить меня в форме
-            rm = True if request.form.get('rememberme') else False
+            rm = form.remember.data
             # авторизуем пользователя
             login_user(userlogin, remember=rm)
             # переход на страницу, с которой изначально осуществлялся запрос неавторизованного пользователя
@@ -142,24 +145,22 @@ def login():
 
         flash('Неверная пара логин/пароль', category='error')
 
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['email']) > 4 and len(request.form['password']) > 4 and request.form['password'] == request.form['password2']:
-            hash = generate_password_hash(request.form['password'])
-            res = dbase.addUser(request.form['name'], request.form['email'], hash)
-            if res:
-                flash('Вы успешно зарегистрированы!', category='success')
-                return redirect(url_for('login'))
-            else:
-                flash('Ошибка при регистрации - невозожно добавить в БД', category='error')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hash = generate_password_hash(form.password.data)
+        res = dbase.addUser(form.name.data, form.email.data, hash)
+        if res:
+            flash('Вы успешно зарегистрированы!', category='success')
+            return redirect(url_for('login'))
         else:
-            flash('Неверно заполнены поля', category='error')
+            flash('Ошибка при регистрации - невозожно добавить в БД', category='error')
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 
 # рабочий код, закомментирован чтобы посмотреть на работу SQLite

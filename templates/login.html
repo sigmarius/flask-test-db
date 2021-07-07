@@ -6,28 +6,34 @@
 
 {% block form %}
     <form action="" method="post" class="form-signin">
+    {{ form.hidden_tag() }}
       <a href="/">
         <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
       </a>
-      {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
-		{% endfor %}
 
       <h1 class="h3 mb-4 font-weight-normal">Авторизуйтесь пожалуйста</h1>
-      <label for="email" class="sr-only">Email address</label>
-      <input type="email" id="email" name="email" class="form-control mb-3" placeholder="Ваш email"
-             required=""
-             autofocus="">
+	    {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
+			{% endfor %}
 
-      <label for="password" class="sr-only">Password</label>
-      <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required="">
-      <div class="checkbox mb-3">
+      {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] %}
+	      <p>{{ field.label(class="sr-only") }}
+	      {% if field.errors %}
+		        <span class="invalid-desc">
+			        {% for e in field.errors %}
+			          {{ e }}
+			        {% endfor %}
+		        </span>
+		        {{ field(class="form-control invalid") }}
+          {% else %}
+            {{ field(class="form-control", placeholder="Пароль") }}
+          {% endif %}
+         </p>
+      {% endfor %}
 
-        <label>
-          <input type="checkbox" name="rememberme" value="rememberme" checked> Запомнить меня
-        </label>
-      </div>
-      <button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Войти</button>
+      <p>{{ form.remember.label() }} {{ form.remember(checked="checked") }}</p>
+      <p>{{ form.submit(class="btn btn-lg btn btn-danger btn-block mb-3") }}</p>
+
       <p class="small text-center text-gray-soft">Еще нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a></p>
       <p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
     </form>

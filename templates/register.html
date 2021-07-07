@@ -8,12 +8,13 @@
 {% block form %}
 
 <form method="post" class="form-signin form-signin--register">
-<a href="/">
+{{ form.hidden_tag() }}
+	<a href="/">
 <img class="mb-4" src="/static/images/logo.png" alt="" width="72" height="72">
 </a>
 <h1 class="h3 mb-4 font-weight-normal">Зарегистрируйтесь пожалуйста</h1>
 
-		 {% for cat, msg in get_flashed_messages(True) %}
+	{% for cat, msg in get_flashed_messages(True) %}
       <div class="flash {{ cat }} text-monospace mt-3 mb-3">{{ msg }}</div>
   {% endfor %}
 
@@ -21,12 +22,30 @@
 	<legend class="alert-heading h6 text-left mb-3">Контактные данные</legend>
 	<div class="form-row">
 		<div class="col-md-6">
-			<label for="name" class="sr-only">Ваше имя</label>
-      <input type="text" id="name" name="name" value="" class="form-control mb-3" placeholder="Ваше имя" required>
+			{{ form.name.label(class="sr-only") }}
+			{% if form.name.errors %}
+		        <span class="invalid-desc">
+			        {% for e in form.name.errors %}
+			          {{ e }}
+			        {% endfor %}
+		        </span>
+		        {{ form.name(class="form-control mb-3 invalid") }}
+          {% else %}
+            {{ form.name(class="form-control mb-3", placeholder="Ваше имя") }}
+          {% endif %}
 		</div>
 		<div class="col-md-6">
-		  <label for="email" class="sr-only">Email address</label>
-		  <input type="email" id="email" name="email" value="" class="form-control mb-3" placeholder="Email address" required>
+			{{ form.email.label(class="sr-only") }}
+			{% if form.email.errors %}
+		        <span class="invalid-desc">
+			        {% for e in form.email.errors %}
+			          {{ e }}
+			        {% endfor %}
+		        </span>
+		        {{ form.email(class="form-control mb-3 invalid") }}
+          {% else %}
+            {{ form.email(class="form-control mb-3", placeholder="Email address") }}
+          {% endif %}
     </div>
 	</div>
 </div>
@@ -35,13 +54,30 @@
 	<div class="form-row">
 	<legend class="alert-heading h6 text-left mb-3">Придумайте пароль - не менее 8 символов, английские буквы и цифры</legend>
 		<div class="col-md-6">
-			<label for="password" class="sr-only">Пароль</label>
-	      <input type="password" id="password" name="password" value="" class="form-control" placeholder="Пароль" required>
+			{{ form.password.label(class="sr-only") }}
+			{% if form.password.errors %}
+		        <span class="invalid-desc">
+			        {% for e in form.password.errors %}
+			          {{ e }}
+			        {% endfor %}
+		        </span>
+		        {{ form.password(class="form-control mb-3 invalid") }}
+          {% else %}
+            {{ form.password(class="form-control mb-3", placeholder="Пароль") }}
+          {% endif %}
 		</div>
 		<div class="col-md-6">
-			<label for="password2" class="sr-only">Password</label>
-			<input type="password" id="password2" name="password2" value="" class="form-control" placeholder="Подтверждение пароля"
-			       required>
+			{{ form.password.label(class="sr-only") }}
+			{% if form.password2.errors %}
+		        <span class="invalid-desc">
+			        {% for e in form.password2.errors %}
+			          {{ e }}
+			        {% endfor %}
+		        </span>
+		        {{ form.password2(class="form-control mb-3 invalid") }}
+          {% else %}
+            {{ form.password2(class="form-control mb-3", placeholder="Подтверждение пароля") }}
+          {% endif %}
 		</div>
 	</div>
 	<div class="form-row mt-3">
@@ -54,9 +90,8 @@
 	</div>
 </div>
 
+{{ form.submit(class="btn btn-lg btn btn-danger btn-block mb-3") }}
 
-
-<button class="btn btn-lg btn btn-danger btn-block mb-3" type="submit">Регистрация</button>
 <p class="small text-center text-gray-soft">Уже зарегистрированы? <a href="/login">Войти</a></p>
 <p class="mt-5 mb-3 text-muted">© ГБУЗВО "Областная клиническая больница"</p>
 </form>
