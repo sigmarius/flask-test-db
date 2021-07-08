@@ -13,10 +13,10 @@
 </head>
 <body>
 {% if menu %}
-	<ul class="list-group">
+	<ul class="nav justify-content-center mb-4">
 				{% for m in menu %}
-					<li class="list-group-item">
-						<a href="{{ url_for(m.url) }}">{{ m.title }}</a>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for(m.url) }}">{{ m.title }}</a>
 					</li>
 				{% endfor %}
 				</ul>

@@ -1,4 +1,6 @@
-from flask import Blueprint, request, redirect, url_for, flash, render_template, session
+import sqlite3
+
+from flask import Blueprint, request, redirect, url_for, flash, render_template, session, g
 
 # 'admin' - имя блюпринта, исп. как суффикс ко всем именам методов данного модуля
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
@@ -19,7 +21,25 @@ def logout_admin():
 
 
 menu = [{'url': '.index', 'title': 'Панель'},
+        {'url': '.list_articles', 'title': 'Список статей'},
+        {'url': '.list_users', 'title': 'Список пользователей'},
         {'url': '.logout', 'title': 'Выйти'}]
+
+# подключение к БД в BluePrint
+db = None  # глобальная переменная, ссылается на БД
+@admin.before_request
+def before_request():
+    """ Установление соединения с БД перед выполнением запроса """
+    global db
+    db = g.get('link_db')  # ссылка на существующее соединение с БД
+
+
+@admin.teardown_request
+def teardown_request(request):
+    """ После выполнения запроса """
+    global db
+    db = None
+    return request
 
 
 # URL: domen/admin/
@@ -56,3 +76,37 @@ def logout():
     print(session)
 
     return redirect(url_for('.login'))
+
+
+@admin.route('list-articles')
+def list_articles():
+    if not isLogged():
+        return redirect(url_for('.login'))
+
+    list = []
+    if db:
+        try:
+            cur = db.cursor()
+            cur.execute(f"SELECT title, text, url FROM posts")
+            list = cur.fetchall()
+        except sqlite3.Error as e:
+            print("Ошибка получения статей из БД " + str(e))
+
+    return render_template('admin/list-articles.html', title='Список статей', menu=menu, list=list)
+
+
+@admin.route('list-users')
+def list_users():
+    if not isLogged():
+        return redirect(url_for('.login'))
+
+    list = []
+    if db:
+        try:
+            cur = db.cursor()
+            cur.execute(f"SELECT name, email FROM users ORDER BY time DESC")
+            list = cur.fetchall()
+        except sqlite3.Error as e:
+            print("Ошибка получения пользователей из БД " + str(e))
+
+    return render_template('admin/list-users.html', title='Список пользователей', menu=menu, list=list)

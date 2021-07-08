@@ -67,7 +67,6 @@ def get_db():
     """ Соединение с БД, если оно еще не установлено """
     if not hasattr(g, 'link_db'):
         g.link_db = connect_db()
-    print('True connection!')
     return g.link_db
 
 
