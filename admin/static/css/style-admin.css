@@ -1,0 +1,23 @@
+body {
+    background-color: #f1f1f1;
+}
+
+.admin-content button {
+    background-color: maroon;
+}
+
+.admin-content__title {
+    padding-top: 20vh;
+    text-align: center;
+}
+
+.admin-content__title h1 {
+    color: maroon;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}

@@ -14,6 +14,8 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from UserLogin import UserLogin
 # WTForms => Для работы с формами => pip install flask_wtf, pip install email_validator
 from forms import LoginForm, RegisterForm
+# регистрируем блюпринт admin => импорт переменной admin
+from admin.admin import admin
 
 # configuration
 DATABASE = '/tmp/okbsqlite.db'
@@ -25,6 +27,10 @@ MAX_CONTENT_LENGTH = 1024 * 1024  # 1Mb
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'okbsqlite.db')))
+
+# регистрируем admin.py => admin - имя переменной
+# адрес страниц => домен/<url_prefix>/<URL-blueprint>
+app.register_blueprint(admin, url_prefix='/admin')
 
 
 # авторизация и связь с приложением
